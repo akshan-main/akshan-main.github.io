@@ -56,6 +56,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous" />
 
   <script is:inline>
     (() => {
@@ -71,22 +72,21 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <div class="nav-right">
       <a href="/">writing</a>
       <a href="mailto:akshankrithick305@gmail.com">email</a>
+      <button
+        class="theme-toggle"
+        id="theme-toggle"
+        type="button"
+        role="switch"
+        aria-checked="false"
+        aria-label="Toggle color theme"
+      >
+        <span class="theme-toggle-thumb" aria-hidden="true"></span>
+      </button>
     </div>
   </nav>
   <main>
     <slot />
   </main>
-
-  <button
-    class="theme-toggle"
-    id="theme-toggle"
-    type="button"
-    role="switch"
-    aria-checked="false"
-    aria-label="Toggle color theme"
-  >
-    <span class="theme-toggle-thumb" aria-hidden="true"></span>
-  </button>
 
   <script is:inline>
     (() => {
