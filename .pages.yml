@@ -1,0 +1,31 @@
+media:
+  input: public/images
+  output: /images
+
+content:
+  - name: posts
+    label: Posts
+    type: collection
+    path: src/content/posts
+    filename: "{fields.title | slugify}.mdx"
+    view:
+      fields: [title, date, draft]
+      primary: title
+      sort: [date]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - {
+          name: date,
+          label: Date,
+          type: date,
+          required: true,
+          options: { format: "yyyy-MM-dd" },
+          default: now,
+        }
+      - { name: description, label: Description, type: string }
+      - { name: readTime, label: Read time, type: string }
+      - { name: draft, label: Draft, type: boolean, default: false }
+      - { name: body, label: Body, type: rich-text, required: true }

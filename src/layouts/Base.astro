@@ -71,29 +71,37 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <div class="nav-right">
       <a href="/">writing</a>
       <a href="mailto:akshankrithick305@gmail.com">email</a>
-      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle color theme">
-        <span data-theme-label></span>
-      </button>
     </div>
   </nav>
   <main>
     <slot />
   </main>
 
+  <button
+    class="theme-toggle"
+    id="theme-toggle"
+    type="button"
+    role="switch"
+    aria-checked="false"
+    aria-label="Toggle color theme"
+  >
+    <span class="theme-toggle-thumb" aria-hidden="true"></span>
+  </button>
+
   <script is:inline>
     (() => {
       const btn = document.getElementById('theme-toggle');
-      const label = btn?.querySelector('[data-theme-label]');
-      const setLabel = (theme) => {
-        if (label) label.textContent = theme === 'grey' ? 'light' : 'grey';
+      if (!btn) return;
+      const sync = (theme) => {
+        btn.setAttribute('aria-checked', theme === 'grey' ? 'true' : 'false');
       };
-      setLabel(document.documentElement.getAttribute('data-theme') || 'light');
-      btn?.addEventListener('click', () => {
+      sync(document.documentElement.getAttribute('data-theme') || 'light');
+      btn.addEventListener('click', () => {
         const current = document.documentElement.getAttribute('data-theme') || 'light';
         const next = current === 'grey' ? 'light' : 'grey';
         document.documentElement.setAttribute('data-theme', next);
         localStorage.setItem('theme', next);
-        setLabel(next);
+        sync(next);
       });
     })();
   </script>
