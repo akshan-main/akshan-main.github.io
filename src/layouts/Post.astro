@@ -1,20 +1,46 @@
 ---
 import Base from './Base.astro';
+
 interface Props {
   title: string;
   date: Date;
   description?: string;
   readTime?: string;
 }
+
 const { title, date, description, readTime } = Astro.props;
 const dateStr = date.toISOString().slice(0, 10);
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description: description ?? undefined,
+  datePublished: date.toISOString(),
+  author: {
+    '@type': 'Person',
+    name: 'Akshan',
+    url: 'https://akshan.dev',
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': canonical,
+  },
+};
 ---
-<Base title={title} description={description}>
+<Base
+  title={title}
+  description={description}
+  ogType="article"
+  publishedTime={date}
+>
   <article>
     <header class="post-header">
       <h1>{title}</h1>
       <div class="post-meta">
-        {dateStr}{readTime ? ` · ${readTime}` : ''}
+        <time datetime={date.toISOString()}>{dateStr}</time>
+        {readTime ? ` · ${readTime}` : ''}
       </div>
     </header>
     <div class="post-body">
@@ -22,4 +48,8 @@ const dateStr = date.toISOString().slice(0, 10);
     </div>
     <a class="back-link" href="/">← all posts</a>
   </article>
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(articleSchema)}
+  />
 </Base>

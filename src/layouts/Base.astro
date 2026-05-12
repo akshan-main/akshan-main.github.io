@@ -1,21 +1,57 @@
 ---
 import '../styles/global.css';
+
 interface Props {
   title?: string;
   description?: string;
+  ogType?: 'website' | 'article';
+  publishedTime?: Date;
+  author?: string;
 }
-const { title, description } = Astro.props;
+
+const {
+  title,
+  description,
+  ogType = 'website',
+  publishedTime,
+  author = 'Akshan',
+} = Astro.props;
+
 const siteTitle = 'Akshan';
 const fullTitle = title ? `${title} — ${siteTitle}` : `${siteTitle} — Writing`;
-const desc = description ?? 'Notes and essays on machine learning, data, and learning in public.';
+const desc =
+  description ?? 'Notes and essays on machine learning, data, and learning in public.';
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 ---
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="generator" content={Astro.generator} />
+
   <title>{fullTitle}</title>
   <meta name="description" content={desc} />
+  <meta name="author" content={author} />
+  <link rel="canonical" href={canonical} />
+
+  <meta property="og:type" content={ogType} />
+  <meta property="og:site_name" content={siteTitle} />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={desc} />
+  <meta property="og:url" content={canonical} />
+  {publishedTime && (
+    <meta property="article:published_time" content={publishedTime.toISOString()} />
+  )}
+  {ogType === 'article' && <meta property="article:author" content={author} />}
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:description" content={desc} />
+
+  <link rel="alternate" type="application/rss+xml" title={`${siteTitle} — RSS`} href="/rss.xml" />
+  <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23111' width='100' height='100'/><text y='.9em' x='50%25' text-anchor='middle' font-size='70' fill='white' font-family='serif'>a</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
