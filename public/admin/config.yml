@@ -1,0 +1,29 @@
+backend:
+  name: github
+  repo: akshan-main/akshan-main.github.io
+  branch: main
+
+media_folder: "public/images"
+public_folder: "/images"
+
+site_url: https://akshan.dev
+display_url: https://akshan.dev
+
+collections:
+  - name: posts
+    label: Posts
+    label_singular: Post
+    folder: src/content/posts
+    extension: mdx
+    format: frontmatter
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}} — {{date | date('YYYY-MM-DD')}}"
+    sortable_fields: [date, title]
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Date, name: date, widget: datetime, format: "YYYY-MM-DD", time_format: false, picker_utc: true }
+      - { label: Description, name: description, widget: string, required: false, hint: "Shown in search results and previews. Optional." }
+      - { label: "Read time", name: readTime, widget: string, required: false, hint: "e.g. '5 min read'. Optional." }
+      - { label: Draft, name: draft, widget: boolean, default: false, required: false }
+      - { label: Body, name: body, widget: markdown, hint: "Write in markdown. For JSX components, switch to Raw mode." }

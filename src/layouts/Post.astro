@@ -1,0 +1,25 @@
+---
+import Base from './Base.astro';
+interface Props {
+  title: string;
+  date: Date;
+  description?: string;
+  readTime?: string;
+}
+const { title, date, description, readTime } = Astro.props;
+const dateStr = date.toISOString().slice(0, 10);
+---
+<Base title={title} description={description}>
+  <article>
+    <header class="post-header">
+      <h1>{title}</h1>
+      <div class="post-meta">
+        {dateStr}{readTime ? ` · ${readTime}` : ''}
+      </div>
+    </header>
+    <div class="post-body">
+      <slot />
+    </div>
+    <a class="back-link" href="/">← all posts</a>
+  </article>
+</Base>
