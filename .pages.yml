@@ -7,6 +7,8 @@ content:
     label: Posts
     type: collection
     path: src/content/posts
+    extension: mdx
+    format: yaml-frontmatter
     filename: "{fields.title | slugify}.mdx"
     view:
       fields: [title, date, draft]
