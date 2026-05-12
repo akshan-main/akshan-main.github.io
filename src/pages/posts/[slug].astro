@@ -1,6 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
 import Post from '../../layouts/Post.astro';
+import Callout from '../../components/Callout.astro';
+import { YouTube, Tweet, Vimeo } from 'astro-embed';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts', ({ data }) => !data.draft);
@@ -12,6 +14,8 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await post.render();
+
+const components = { Callout, YouTube, Tweet, Vimeo };
 ---
 <Post
   title={post.data.title}
@@ -19,5 +23,5 @@ const { Content } = await post.render();
   description={post.data.description}
   readTime={post.data.readTime}
 >
-  <Content />
+  <Content components={components} />
 </Post>

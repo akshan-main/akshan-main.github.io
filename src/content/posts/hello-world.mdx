@@ -12,6 +12,40 @@ The plan is to use this space for short notes on what I'm learning — machine l
 
 Projects belong on GitHub. A resume belongs in a PDF. But the in-between thinking — what worked, what broke, what I'd do differently — needs somewhere quieter to live. That's what this is.
 
-> Because this is `.mdx`, I can drop a React/Astro component inline whenever a post needs one — a chart, a demo, an interactive widget — without changing the build.
+<Callout type="info" title="Quick tour">
+This site supports math, callouts, code, embeds — everything below works in any `.mdx` post.
+</Callout>
+
+## Math
+
+Inline: $f(x) = ax^2 + bx + c$.
+
+Block:
+
+$$
+\nabla_\theta J(\theta) = \frac{1}{m} \sum_{i=1}^{m} \left( h_\theta(x^{(i)}) - y^{(i)} \right) x^{(i)}
+$$
+
+## Callouts
+
+<Callout type="tip" title="Tip">
+The toggle in the bottom-right switches between light and grey themes.
+</Callout>
+
+<Callout type="warn" title="Heads up">
+Drafts (`draft: true` in frontmatter) are excluded from the build.
+</Callout>
+
+## Code
+
+```python
+def softmax(x):
+    e = np.exp(x - x.max())
+    return e / e.sum()
+```
+
+## Embeds
+
+<YouTube id="dQw4w9WgXcQ" />
 
 More soon.

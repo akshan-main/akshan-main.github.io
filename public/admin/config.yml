@@ -9,6 +9,9 @@ public_folder: "/images"
 site_url: https://akshan.dev
 display_url: https://akshan.dev
 
+editor:
+  preview: false
+
 collections:
   - name: posts
     label: Posts
@@ -23,7 +26,112 @@ collections:
     fields:
       - { label: Title, name: title, widget: string }
       - { label: Date, name: date, widget: datetime, format: "YYYY-MM-DD", time_format: false, picker_utc: true }
-      - { label: Description, name: description, widget: string, required: false, hint: "Shown in search results and previews. Optional." }
-      - { label: "Read time", name: readTime, widget: string, required: false, hint: "e.g. '5 min read'. Optional." }
+      - { label: Description, name: description, widget: string, required: false }
+      - { label: "Read time", name: readTime, widget: string, required: false, hint: "e.g. '5 min read'" }
       - { label: Draft, name: draft, widget: boolean, default: false, required: false }
-      - { label: Body, name: body, widget: markdown, hint: "Write in markdown. For JSX components, switch to Raw mode." }
+      - {
+          label: Body,
+          name: body,
+          widget: markdown,
+          hint: "Toolbar has Callout / Math / YouTube / Tweet buttons. Switch to Raw mode for full MDX.",
+          editor_components: [callout, math-inline, math-block, youtube, tweet, vimeo],
+        }
+
+editor_components:
+  - id: callout
+    label: Callout
+    fields:
+      - {
+          name: type,
+          label: Type,
+          widget: select,
+          options: [info, note, warn, tip],
+          default: info,
+        }
+      - { name: title, label: Title (optional), widget: string, required: false }
+      - { name: body, label: Body, widget: text }
+    pattern: '<Callout(?: type="(info|note|warn|tip)")?(?: title="([^"]*)")?>([\s\S]*?)</Callout>'
+    fromBlock: |
+      function (match) {
+        return { type: match[1] || 'info', title: match[2] || '', body: match[3].trim() };
+      }
+    toBlock: |
+      function (obj) {
+        const attrs = [];
+        if (obj.type) attrs.push('type="' + obj.type + '"');
+        if (obj.title) attrs.push('title="' + obj.title + '"');
+        const head = attrs.length ? '<Callout ' + attrs.join(' ') + '>' : '<Callout>';
+        return head + '\n' + (obj.body || '') + '\n</Callout>';
+      }
+    toPreview: |
+      function (obj) {
+        return '<aside class="cms-preview-callout cms-preview-callout-' + (obj.type || 'info') + '">' +
+          (obj.title ? '<strong>' + obj.title + '</strong><br/>' : '') +
+          (obj.body || '') +
+          '</aside>';
+      }
+
+  - id: math-block
+    label: Math (block)
+    fields:
+      - { name: tex, label: TeX, widget: text, hint: "e.g. E = mc^2" }
+    pattern: '\$\$([\s\S]*?)\$\$'
+    fromBlock: |
+      function (match) { return { tex: match[1].trim() }; }
+    toBlock: |
+      function (obj) { return '$$\n' + (obj.tex || '') + '\n$$'; }
+    toPreview: |
+      function (obj) { return '<code>$$ ' + (obj.tex || '') + ' $$</code>'; }
+
+  - id: math-inline
+    label: Math (inline)
+    fields:
+      - { name: tex, label: TeX, widget: string, hint: "e.g. x^2 + y^2" }
+    pattern: '\$([^$\n]+?)\$'
+    fromBlock: |
+      function (match) { return { tex: match[1] }; }
+    toBlock: |
+      function (obj) { return '$' + (obj.tex || '') + '$'; }
+    toPreview: |
+      function (obj) { return '<code>$' + (obj.tex || '') + '$</code>'; }
+
+  - id: youtube
+    label: YouTube
+    fields:
+      - { name: id, label: Video ID or URL, widget: string, hint: "Paste full URL or just the ID" }
+    pattern: '<YouTube\s+id="([^"]+)"\s*\/?>'
+    fromBlock: |
+      function (match) { return { id: match[1] }; }
+    toBlock: |
+      function (obj) {
+        let id = (obj.id || '').trim();
+        const m = id.match(/(?:v=|youtu\.be\/|embed\/)([A-Za-z0-9_-]{11})/);
+        if (m) id = m[1];
+        return '<YouTube id="' + id + '" />';
+      }
+    toPreview: |
+      function (obj) { return '<code>YouTube: ' + (obj.id || '') + '</code>'; }
+
+  - id: tweet
+    label: Tweet
+    fields:
+      - { name: url, label: Tweet URL, widget: string }
+    pattern: '<Tweet\s+id="([^"]+)"\s*\/?>'
+    fromBlock: |
+      function (match) { return { url: match[1] }; }
+    toBlock: |
+      function (obj) { return '<Tweet id="' + (obj.url || '') + '" />'; }
+    toPreview: |
+      function (obj) { return '<code>Tweet: ' + (obj.url || '') + '</code>'; }
+
+  - id: vimeo
+    label: Vimeo
+    fields:
+      - { name: id, label: Vimeo ID or URL, widget: string }
+    pattern: '<Vimeo\s+id="([^"]+)"\s*\/?>'
+    fromBlock: |
+      function (match) { return { id: match[1] }; }
+    toBlock: |
+      function (obj) { return '<Vimeo id="' + (obj.id || '') + '" />'; }
+    toPreview: |
+      function (obj) { return '<code>Vimeo: ' + (obj.id || '') + '</code>'; }
