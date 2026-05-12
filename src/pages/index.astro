@@ -4,6 +4,14 @@ import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('posts', ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const formatDate = (d: Date) =>
+  d.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'UTC',
+  });
 ---
 <Base>
   <section class="hero">
@@ -18,7 +26,7 @@ const posts = (await getCollection('posts', ({ data }) => !data.draft))
         <li>
           <a href={`/posts/${post.slug}/`}>
             <span class="post-title">{post.data.title}</span>
-            <span class="post-date">{post.data.date.toISOString().slice(0, 10)}</span>
+            <span class="post-date">{formatDate(post.data.date)}</span>
           </a>
         </li>
       ))}

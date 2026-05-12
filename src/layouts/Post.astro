@@ -9,7 +9,12 @@ interface Props {
 }
 
 const { title, date, description, readTime } = Astro.props;
-const dateStr = date.toISOString().slice(0, 10);
+const dateStr = date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  timeZone: 'UTC',
+});
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 
 const articleSchema = {
