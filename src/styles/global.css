@@ -1,11 +1,11 @@
 :root,
 :root[data-theme="light"] {
-    --bg: #fdf7d4;
+    --bg: #fbf6dd;
     --text: #1a1a1a;
-    --text-muted: #5e5a44;
+    --text-muted: #6a644e;
     --accent: #b8860b;
-    --border: #e8dca8;
-    --code-bg: #f4ebbf;
+    --border: #ebe2bc;
+    --code-bg: #f2eacc;
 }
 
 :root[data-theme="grey"] {
