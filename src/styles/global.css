@@ -317,6 +317,70 @@ section { margin-bottom: 4rem; }
 .admin-link:hover,
 .admin-link:focus-visible { opacity: 0.5; }
 
+/* Tag buttons */
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1.25rem 0 0;
+    list-style: none;
+    padding: 0;
+}
+
+.tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.75rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.02em;
+    color: var(--text-muted);
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    text-decoration: none;
+    transition: color 0.2s, border-color 0.2s, background-color 0.2s, transform 0.1s;
+}
+
+.tag:hover,
+.tag:focus-visible {
+    color: var(--text);
+    border-color: var(--text-muted);
+}
+
+.tag:active { transform: translateY(1px); }
+
+.tag-count {
+    display: inline-block;
+    min-width: 1rem;
+    padding: 0 0.35rem;
+    font-size: 0.65rem;
+    text-align: center;
+    color: var(--bg);
+    background: var(--text-muted);
+    border-radius: 999px;
+    line-height: 1.35;
+}
+
+.tags-sm .tag {
+    padding: 0.15rem 0.55rem;
+    font-size: 0.65rem;
+}
+
+.muted-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    margin-left: 0.75rem;
+    font-size: 0.95rem;
+}
+.muted-link:hover { color: var(--text); }
+
+.empty {
+    color: var(--text-muted);
+    font-style: italic;
+}
+
 /* Callout component */
 .callout {
     margin: 1.75rem 0;

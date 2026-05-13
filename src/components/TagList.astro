@@ -1,0 +1,19 @@
+---
+import { tagHref } from '../lib/tags';
+
+interface Props {
+  tags: string[];
+  size?: 'sm' | 'md';
+}
+
+const { tags, size = 'md' } = Astro.props;
+---
+{tags.length > 0 && (
+  <ul class:list={["tags", size === 'sm' && "tags-sm"]}>
+    {tags.map((tag) => (
+      <li>
+        <a class="tag" href={tagHref(tag)}>{tag}</a>
+      </li>
+    ))}
+  </ul>
+)}

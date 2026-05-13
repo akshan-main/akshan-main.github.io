@@ -1,0 +1,37 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getAllTags, originalTagName, tagHref } from '../../lib/tags';
+
+const tagsMap = await getAllTags();
+const tags = Array.from(tagsMap.entries())
+  .map(([slug, posts]) => ({
+    slug,
+    name: originalTagName(slug, posts),
+    count: posts.length,
+  }))
+  .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
+---
+<Base title="Tags" description="Browse posts by topic.">
+  <section class="hero">
+    <h1>Tags.</h1>
+    <p class="lead">Filter posts by topic. Click any tag.</p>
+  </section>
+
+  <section>
+    <div class="section-label">All tags</div>
+    {tags.length === 0 ? (
+      <p class="empty">No tags yet.</p>
+    ) : (
+      <ul class="tags">
+        {tags.map((t) => (
+          <li>
+            <a class="tag" href={tagHref(t.name)}>
+              {t.name}
+              <span class="tag-count">{t.count}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    )}
+  </section>
+</Base>

@@ -1,14 +1,16 @@
 ---
 import Base from './Base.astro';
+import TagList from '../components/TagList.astro';
 
 interface Props {
   title: string;
   date: Date;
   description?: string;
   readTime?: string;
+  tags?: string[];
 }
 
-const { title, date, description, readTime } = Astro.props;
+const { title, date, description, readTime, tags = [] } = Astro.props;
 const dateStr = date.toLocaleDateString('en-US', {
   year: 'numeric',
   month: 'long',
@@ -23,6 +25,7 @@ const articleSchema = {
   headline: title,
   description: description ?? undefined,
   datePublished: date.toISOString(),
+  keywords: tags.length ? tags.join(', ') : undefined,
   author: {
     '@type': 'Person',
     name: 'Akshan',
@@ -47,6 +50,7 @@ const articleSchema = {
         <time datetime={date.toISOString()}>{dateStr}</time>
         {readTime ? ` · ${readTime}` : ''}
       </div>
+      <TagList tags={tags} />
     </header>
     <div class="post-body">
       <slot />

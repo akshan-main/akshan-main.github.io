@@ -1,0 +1,48 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getAllTags, originalTagName, tagSlug } from '../../lib/tags';
+
+export async function getStaticPaths() {
+  const tagsMap = await getAllTags();
+  return Array.from(tagsMap.entries()).map(([slug, posts]) => ({
+    params: { tag: slug },
+    props: { posts, name: originalTagName(slug, posts) },
+  }));
+}
+
+const { posts, name } = Astro.props;
+const sorted = posts.sort(
+  (a: any, b: any) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+const formatDate = (d: Date) =>
+  d.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'UTC',
+  });
+---
+<Base title={`Tagged: ${name}`} description={`Posts tagged "${name}".`}>
+  <section class="hero">
+    <h1>Tagged <em>{name}</em>.</h1>
+    <p class="lead">
+      {sorted.length === 1 ? '1 post' : `${sorted.length} posts`} with this tag.
+      <a class="muted-link" href="/tags/">All tags →</a>
+    </p>
+  </section>
+
+  <section>
+    <div class="section-label">Posts</div>
+    <ul class="post-list">
+      {sorted.map((post: any) => (
+        <li>
+          <a href={`/posts/${post.slug}/`}>
+            <span class="post-title">{post.data.title}</span>
+            <span class="post-date">{formatDate(post.data.date)}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>
