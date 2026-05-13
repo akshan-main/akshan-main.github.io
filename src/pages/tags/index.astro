@@ -1,29 +1,43 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getAllTags, originalTagName, tagHref } from '../../lib/tags';
+import { getAllTags, originalTagName, tagHref, tagSlug } from '../../lib/tags';
+import { topics } from '../../data/topics';
 
 const tagsMap = await getAllTags();
-const tags = Array.from(tagsMap.entries())
+
+const allTags = Array.from(tagsMap.entries())
   .map(([slug, posts]) => ({
     slug,
     name: originalTagName(slug, posts),
     count: posts.length,
   }))
   .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
+
+const bySlug = new Map(allTags.map((t) => [t.slug, t]));
+
+const topicSections = topics
+  .map((topic) => ({
+    label: topic.label,
+    slug: topic.slug,
+    items: topic.tags
+      .map((raw) => bySlug.get(tagSlug(raw)))
+      .filter((x): x is { slug: string; name: string; count: number } => Boolean(x)),
+  }))
+  .filter((t) => t.items.length > 0);
 ---
-<Base title="Tags" description="Browse posts by topic.">
+<Base title="Tags" description="Browse posts by tag, grouped by topic.">
   <section class="hero">
     <h1>Tags.</h1>
-    <p class="lead">Filter posts by topic. Click any tag.</p>
+    <p class="lead">Filter posts by topic or by tag. Click any tag.</p>
   </section>
 
   <section>
     <div class="section-label">All tags</div>
-    {tags.length === 0 ? (
+    {allTags.length === 0 ? (
       <p class="empty">No tags yet.</p>
     ) : (
       <ul class="tags">
-        {tags.map((t) => (
+        {allTags.map((t) => (
           <li>
             <a class="tag" href={tagHref(t.name)}>
               {t.name}
@@ -34,4 +48,20 @@ const tags = Array.from(tagsMap.entries())
       </ul>
     )}
   </section>
+
+  {topicSections.map((topic) => (
+    <section>
+      <div class="section-label">{topic.label}</div>
+      <ul class="tags">
+        {topic.items.map((t) => (
+          <li>
+            <a class="tag" href={tagHref(t.name)}>
+              {t.name}
+              <span class="tag-count">{t.count}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))}
 </Base>
