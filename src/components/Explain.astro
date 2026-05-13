@@ -1,0 +1,9 @@
+---
+// Inline link to a mini-blog explainer.
+// Usage:  <Explain slug="tokens">tokens</Explain>
+interface Props {
+  slug: string;
+}
+const { slug } = Astro.props;
+---
+<a class="explain-link" href={`/posts/${slug}/`}><slot /></a>

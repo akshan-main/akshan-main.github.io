@@ -39,6 +39,14 @@ collections:
         }
       - { label: Draft, name: draft, widget: boolean, default: false, required: false }
       - {
+          label: "Mini blog (explainer)",
+          name: mini,
+          widget: boolean,
+          default: false,
+          required: false,
+          hint: "Hidden from homepage, tag pages, and RSS. Reachable only via inline <Explain> links.",
+        }
+      - {
           label: Body,
           name: body,
           widget: markdown,

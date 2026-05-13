@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 
-const posts = (await getCollection('posts', ({ data }) => !data.draft))
+const posts = (await getCollection('posts', ({ data }) => !data.draft && !data.mini))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
 const formatDate = (d: Date) =>

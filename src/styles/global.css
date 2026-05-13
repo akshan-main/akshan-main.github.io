@@ -190,6 +190,44 @@ section { margin-bottom: 4rem; }
 
 .post-header { margin-bottom: 3rem; }
 
+.mini-badge {
+    display: inline-block;
+    margin-bottom: 1rem;
+    padding: 0.25rem 0.65rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--bg);
+    background: var(--text-muted);
+    border-radius: 999px;
+}
+
+.explain-link {
+    color: var(--text);
+    text-decoration: underline dotted;
+    text-decoration-color: var(--text-muted);
+    text-underline-offset: 4px;
+    transition: text-decoration-color 0.2s, color 0.2s;
+}
+
+.explain-link::after {
+    content: '?';
+    display: inline-block;
+    margin-left: 0.18em;
+    font-size: 0.65em;
+    vertical-align: super;
+    color: var(--text-muted);
+    transition: color 0.2s;
+}
+
+.explain-link:hover {
+    color: var(--accent);
+    text-decoration-color: var(--accent);
+}
+
+.explain-link:hover::after { color: var(--accent); }
+
 .post-header h1 {
     font-size: clamp(2rem, 5vw, 2.75rem);
     font-weight: 400;

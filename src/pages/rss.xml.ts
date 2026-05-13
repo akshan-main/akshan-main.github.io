@@ -3,9 +3,9 @@ import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
 
 export async function GET(context: APIContext) {
-  const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
-    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
-  );
+  const posts = (
+    await getCollection('posts', ({ data }) => !data.draft && !data.mini)
+  ).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
   return rss({
     title: 'Akshan — Writing',

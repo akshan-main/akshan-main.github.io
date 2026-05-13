@@ -37,4 +37,11 @@ content:
           hint: "Press enter after each tag. e.g. machine-learning, transformers, notes",
         }
       - { name: draft, label: Draft, type: boolean, default: false }
+      - {
+          name: mini,
+          label: "Mini blog (explainer)",
+          type: boolean,
+          default: false,
+          hint: "Hidden from homepage, tags index, and RSS. Reachable only via inline <Explain> links.",
+        }
       - { name: body, label: Body, type: rich-text, required: true }

@@ -16,8 +16,14 @@ export async function getPublishedPosts(): Promise<Post[]> {
   return posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 }
 
+// Main posts only — excludes mini explainer blogs. Used by homepage, tag pages.
+export async function getMainPosts(): Promise<Post[]> {
+  const posts = await getCollection('posts', ({ data }) => !data.draft && !data.mini);
+  return posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+}
+
 export async function getAllTags(): Promise<Map<string, Post[]>> {
-  const posts = await getPublishedPosts();
+  const posts = await getMainPosts();
   const map = new Map<string, Post[]>();
 
   for (const post of posts) {
