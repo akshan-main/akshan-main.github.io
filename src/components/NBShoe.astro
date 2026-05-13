@@ -1,49 +1,87 @@
 ---
-// Decorative New Balance shoe outline.
-// Stroke is a fixed light-yellow that matches the light-theme background,
-// so it disappears in light mode and reveals itself when the theme is grey.
+// New Balance 990v6 silhouette, outline only.
+// Stroke is fixed light-yellow (same as light-theme bg) so it's
+// invisible in light mode and reveals itself in grey mode.
 ---
 <svg
   class="nb-shoe"
-  viewBox="0 0 300 140"
+  viewBox="0 0 400 200"
   fill="none"
   stroke="#fbf6dd"
-  stroke-width="1.5"
+  stroke-width="2"
   stroke-linejoin="round"
   stroke-linecap="round"
   aria-hidden="true"
   focusable="false"
 >
-  <!-- Outsole (bottom slab) -->
-  <path d="M 22 112 L 278 112 L 274 124 L 26 124 Z" />
-  <!-- Upper outline: toe → vamp → collar → heel -->
-  <path d="M 26 112 C 18 96, 26 80, 52 74 L 92 64 C 116 54, 142 50, 172 52 L 210 58 C 244 64, 268 78, 278 96 L 278 112" />
-  <!-- Tongue / lace gap -->
-  <path d="M 92 64 C 104 76, 138 76, 168 52" />
+  <!-- Chunky midsole + outsole slab (the signature 990 silhouette) -->
+  <path d="M 30 178
+           Q 14 160, 22 138
+           C 28 128, 38 122, 55 122
+           L 350 122
+           C 370 122, 380 132, 384 150
+           L 384 170
+           Q 380 180, 370 182
+           L 36 182 Z" />
+
+  <!-- Outsole / midsole separator -->
+  <path d="M 26 164 L 384 164" />
+
+  <!-- Front upper panel: toe → throat front -->
+  <path d="M 55 122
+           Q 42 112, 48 92
+           L 90 84
+           L 120 78
+           C 128 82, 132 92, 135 105
+           L 138 122" />
+
+  <!-- Back upper panel: throat back → heel -->
+  <path d="M 242 122
+           L 248 105
+           C 256 95, 268 88, 285 84
+           L 320 72
+           Q 355 65, 375 88
+           L 375 122" />
+
+  <!-- Tongue arcing up through the throat -->
+  <path d="M 138 122 Q 190 90, 242 122" />
+
   <!-- Laces -->
-  <path d="M 102 70 L 148 64" />
-  <path d="M 108 76 L 152 70" />
-  <path d="M 114 82 L 156 76" />
+  <path d="M 145 115 L 235 115" />
+  <path d="M 150 105 L 230 105" />
+  <path d="M 158 95 L 222 95" />
+
   <!-- Heel collar curve -->
-  <path d="M 226 60 C 238 50, 264 56, 276 76" />
-  <!-- The N logo: two verticals with a diagonal between -->
-  <path d="M 168 92 L 168 72 L 198 100 L 198 80" />
-  <!-- Sole / upper separator -->
-  <path d="M 26 110 L 278 110" />
-  <!-- Tread marks -->
-  <path d="M 50 124 L 50 114" />
-  <path d="M 88 124 L 88 114" />
-  <path d="M 128 124 L 128 114" />
-  <path d="M 168 124 L 168 114" />
-  <path d="M 208 124 L 208 114" />
-  <path d="M 248 124 L 248 114" />
-  <!-- Toe cap stitch -->
-  <path d="M 32 104 C 38 94, 54 90, 76 92" />
-  <!-- Eyelets (tiny dots along the lace edge) -->
-  <circle cx="100" cy="68" r="1.2" />
-  <circle cx="108" cy="74" r="1.2" />
-  <circle cx="116" cy="80" r="1.2" />
-  <circle cx="146" cy="62" r="1.2" />
-  <circle cx="150" cy="68" r="1.2" />
-  <circle cx="154" cy="74" r="1.2" />
+  <path d="M 290 92 Q 335 70, 365 88" />
+
+  <!-- Pull tab at heel back -->
+  <path d="M 357 76 L 380 73 L 380 88 L 357 88 Z" />
+
+  <!-- ENCAP detail lines in heel midsole -->
+  <path d="M 335 132 L 335 160" />
+  <path d="M 360 132 L 360 160" />
+
+  <!-- Outsole tread marks -->
+  <path d="M 60 178 L 60 168" />
+  <path d="M 105 178 L 105 168" />
+  <path d="M 150 178 L 150 168" />
+  <path d="M 195 178 L 195 168" />
+  <path d="M 240 178 L 240 168" />
+  <path d="M 285 178 L 285 168" />
+  <path d="M 330 178 L 330 168" />
+
+  <!-- Toe-cap stitching -->
+  <path d="M 45 108 C 55 96, 75 90, 110 88" />
+
+  <!-- The N: real italic bold letterform, filled -->
+  <text
+    x="265"
+    y="158"
+    font-family="Helvetica, Arial, sans-serif"
+    font-weight="900"
+    font-style="italic"
+    font-size="56"
+    fill="#fbf6dd"
+    stroke="none"
+  >N</text>
 </svg>
