@@ -1,9 +1,9 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getAllTags, originalTagName, tagSlug } from '../../lib/tags';
+import { getAllTags, originalTagName } from '../../lib/tags';
 
 export async function getStaticPaths() {
-  const tagsMap = await getAllTags();
+  const tagsMap = await getAllTags({ includeMini: true });
   return Array.from(tagsMap.entries()).map(([slug, posts]) => ({
     params: { tag: slug },
     props: { posts, name: originalTagName(slug, posts) },
@@ -11,9 +11,12 @@ export async function getStaticPaths() {
 }
 
 const { posts, name } = Astro.props;
-const sorted = posts.sort(
-  (a: any, b: any) => b.data.date.valueOf() - a.data.date.valueOf(),
+
+const sorted = (posts as any[]).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
+const mainPosts = sorted.filter((p) => !p.data.mini);
+const miniPosts = sorted.filter((p) => p.data.mini);
 
 const formatDate = (d: Date) =>
   d.toLocaleDateString('en-US', {
@@ -27,22 +30,62 @@ const formatDate = (d: Date) =>
   <section class="hero">
     <h1>Tagged <em>{name}</em>.</h1>
     <p class="lead">
-      {sorted.length === 1 ? '1 post' : `${sorted.length} posts`} with this tag.
+      {mainPosts.length === 1 ? '1 post' : `${mainPosts.length} posts`} with this tag.
       <a class="muted-link" href="/tags/">All tags →</a>
     </p>
   </section>
 
   <section>
-    <div class="section-label">Posts</div>
-    <ul class="post-list">
-      {sorted.map((post: any) => (
-        <li>
-          <a href={`/posts/${post.slug}/`}>
-            <span class="post-title">{post.data.title}</span>
-            <span class="post-date">{formatDate(post.data.date)}</span>
-          </a>
-        </li>
-      ))}
-    </ul>
+    <div class="post-list-header">
+      <div class="section-label">Posts</div>
+      {miniPosts.length > 0 && (
+        <button class="mini-toggle" type="button" data-mini-toggle>
+          <span data-off>+ include mini blogs</span>
+          <span data-on>− hide mini blogs</span>
+        </button>
+      )}
+    </div>
+    {mainPosts.length === 0 ? (
+      <p class="empty">No main posts with this tag yet — toggle "include mini blogs" to see explainers.</p>
+    ) : (
+      <ul class="post-list">
+        {mainPosts.map((post) => (
+          <li>
+            <a href={`/posts/${post.slug}/`}>
+              <span class="post-title">{post.data.title}</span>
+              <span class="post-date">{formatDate(post.data.date)}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    )}
   </section>
+
+  {miniPosts.length > 0 && (
+    <section class="mini-section">
+      <div class="section-label">Mini blogs</div>
+      <ul class="post-list">
+        {miniPosts.map((post) => (
+          <li>
+            <a href={`/posts/${post.slug}/`}>
+              <span class="post-title">{post.data.title}</span>
+              <span class="post-date">{formatDate(post.data.date)}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  <script is:inline>
+    (() => {
+      const root = document.documentElement;
+      document.querySelectorAll('[data-mini-toggle]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const on = root.classList.toggle('show-mini');
+          localStorage.setItem('show-mini', on ? 'true' : 'false');
+        });
+      });
+    })();
+  </script>
 </Base>

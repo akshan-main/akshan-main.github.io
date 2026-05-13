@@ -2,8 +2,12 @@
 import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 
-const posts = (await getCollection('posts', ({ data }) => !data.draft && !data.mini))
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const all = (await getCollection('posts', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+const mainPosts = all.filter((p) => !p.data.mini);
+const miniPosts = all.filter((p) => p.data.mini);
 
 const formatDate = (d: Date) =>
   d.toLocaleDateString('en-US', {
@@ -24,9 +28,17 @@ const formatDate = (d: Date) =>
   </section>
 
   <section>
-    <div class="section-label">Posts</div>
+    <div class="post-list-header">
+      <div class="section-label">Posts</div>
+      {miniPosts.length > 0 && (
+        <button class="mini-toggle" type="button" data-mini-toggle>
+          <span data-off>+ include mini blogs</span>
+          <span data-on>− hide mini blogs</span>
+        </button>
+      )}
+    </div>
     <ul class="post-list">
-      {posts.map((post) => (
+      {mainPosts.map((post) => (
         <li>
           <a href={`/posts/${post.slug}/`}>
             <span class="post-title">{post.data.title}</span>
@@ -36,4 +48,32 @@ const formatDate = (d: Date) =>
       ))}
     </ul>
   </section>
+
+  {miniPosts.length > 0 && (
+    <section class="mini-section">
+      <div class="section-label">Mini blogs</div>
+      <ul class="post-list">
+        {miniPosts.map((post) => (
+          <li>
+            <a href={`/posts/${post.slug}/`}>
+              <span class="post-title">{post.data.title}</span>
+              <span class="post-date">{formatDate(post.data.date)}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  <script is:inline>
+    (() => {
+      const root = document.documentElement;
+      document.querySelectorAll('[data-mini-toggle]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const on = root.classList.toggle('show-mini');
+          localStorage.setItem('show-mini', on ? 'true' : 'false');
+        });
+      });
+    })();
+  </script>
 </Base>

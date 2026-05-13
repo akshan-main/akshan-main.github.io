@@ -22,8 +22,10 @@ export async function getMainPosts(): Promise<Post[]> {
   return posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 }
 
-export async function getAllTags(): Promise<Map<string, Post[]>> {
-  const posts = await getMainPosts();
+export async function getAllTags(
+  { includeMini = false }: { includeMini?: boolean } = {},
+): Promise<Map<string, Post[]>> {
+  const posts = includeMini ? await getPublishedPosts() : await getMainPosts();
   const map = new Map<string, Post[]>();
 
   for (const post of posts) {

@@ -163,6 +163,42 @@ section { margin-bottom: 4rem; }
     border-bottom: 1px solid var(--border);
 }
 
+.post-list-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.post-list-header .section-label {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.mini-toggle {
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    transition: color 0.2s;
+}
+
+.mini-toggle:hover { color: var(--text); }
+.mini-toggle [data-on] { display: none; }
+.mini-toggle [data-off] { display: inline; }
+:root.show-mini .mini-toggle [data-on] { display: inline; }
+:root.show-mini .mini-toggle [data-off] { display: none; }
+
+.mini-section { display: none; }
+:root.show-mini .mini-section { display: block; }
+
 .post-list { list-style: none; }
 .post-list li { border-bottom: 1px solid var(--border); }
 .post-list li:last-child { border-bottom: none; }

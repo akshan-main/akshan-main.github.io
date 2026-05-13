@@ -61,9 +61,12 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 
   <script is:inline>
     (() => {
-      const saved = localStorage.getItem('theme');
-      const theme = saved === 'grey' ? 'grey' : 'light';
-      document.documentElement.setAttribute('data-theme', theme);
+      const root = document.documentElement;
+      const theme = localStorage.getItem('theme') === 'grey' ? 'grey' : 'light';
+      root.setAttribute('data-theme', theme);
+      if (localStorage.getItem('show-mini') === 'true') {
+        root.classList.add('show-mini');
+      }
     })();
   </script>
 </head>
