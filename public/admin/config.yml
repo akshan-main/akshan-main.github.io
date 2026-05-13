@@ -13,6 +13,28 @@ editor:
   preview: false
 
 collections:
+  - name: topics
+    label: Topics
+    label_singular: Topic
+    folder: src/content/topics
+    extension: json
+    format: json
+    create: true
+    slug: "{{slug}}"
+    summary: "{{label}}"
+    sortable_fields: [label]
+    fields:
+      - { label: Label, name: label, widget: string, hint: "e.g. Machine learning" }
+      - {
+          label: Tags in this topic,
+          name: tags,
+          widget: list,
+          required: false,
+          allow_add: true,
+          hint: "Tags that belong here. A tag can live in multiple topics.",
+          field: { label: Tag, name: tag, widget: string },
+        }
+
   - name: posts
     label: Posts
     label_singular: Post

@@ -13,4 +13,12 @@ const posts = defineCollection({
   }),
 });
 
-export const collections = { posts };
+const topics = defineCollection({
+  type: 'data',
+  schema: z.object({
+    label: z.string(),
+    tags: z.array(z.string()).default([]),
+  }),
+});
+
+export const collections = { posts, topics };

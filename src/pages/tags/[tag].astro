@@ -38,12 +38,10 @@ const formatDate = (d: Date) =>
   <section>
     <div class="post-list-header">
       <div class="section-label">Posts</div>
-      {miniPosts.length > 0 && (
-        <button class="mini-toggle" type="button" data-mini-toggle>
-          <span data-off>+ include mini blogs</span>
-          <span data-on>− hide mini blogs</span>
-        </button>
-      )}
+      <button class="mini-toggle" type="button" data-mini-toggle>
+        <span data-off>+ include mini blogs</span>
+        <span data-on>− hide mini blogs</span>
+      </button>
     </div>
     {mainPosts.length === 0 ? (
       <p class="empty">No main posts with this tag yet — toggle "include mini blogs" to see explainers.</p>
@@ -61,9 +59,11 @@ const formatDate = (d: Date) =>
     )}
   </section>
 
-  {miniPosts.length > 0 && (
-    <section class="mini-section">
-      <div class="section-label">Mini blogs</div>
+  <section class="mini-section">
+    <div class="section-label">Mini blogs</div>
+    {miniPosts.length === 0 ? (
+      <p class="empty">No mini blogs with this tag yet.</p>
+    ) : (
       <ul class="post-list">
         {miniPosts.map((post) => (
           <li>
@@ -74,8 +74,8 @@ const formatDate = (d: Date) =>
           </li>
         ))}
       </ul>
-    </section>
-  )}
+    )}
+  </section>
 
   <script is:inline>
     (() => {

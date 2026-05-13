@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
 import { getAllTags, originalTagName, tagHref, tagSlug } from '../../lib/tags';
-import { topics } from '../../data/topics';
 
 const tagsMap = await getAllTags();
 
@@ -15,15 +15,17 @@ const allTags = Array.from(tagsMap.entries())
 
 const bySlug = new Map(allTags.map((t) => [t.slug, t]));
 
-const topicSections = topics
-  .map((topic) => ({
-    label: topic.label,
-    slug: topic.slug,
-    items: topic.tags
+const topicEntries = await getCollection('topics');
+const topicSections = topicEntries
+  .map((entry) => ({
+    slug: entry.id,
+    label: entry.data.label,
+    items: entry.data.tags
       .map((raw) => bySlug.get(tagSlug(raw)))
       .filter((x): x is { slug: string; name: string; count: number } => Boolean(x)),
   }))
-  .filter((t) => t.items.length > 0);
+  .filter((t) => t.items.length > 0)
+  .sort((a, b) => a.label.localeCompare(b.label));
 ---
 <Base title="Tags" description="Browse posts by tag, grouped by topic.">
   <section class="hero">

@@ -3,6 +3,27 @@ media:
   output: /images
 
 content:
+  - name: topics
+    label: Topics
+    type: collection
+    path: src/content/topics
+    extension: json
+    format: json
+    filename: "{fields.label | slugify}.json"
+    view:
+      fields: [label]
+      primary: label
+      sort: [label]
+    fields:
+      - { name: label, label: Label, type: string, required: true, hint: "e.g. Machine learning" }
+      - {
+          name: tags,
+          label: Tags in this topic,
+          type: string,
+          list: true,
+          hint: "Tags that belong here. A tag can be added to multiple topics.",
+        }
+
   - name: posts
     label: Posts
     type: collection
@@ -44,4 +65,11 @@ content:
           default: false,
           hint: "Hidden from homepage, tags index, and RSS. Reachable only via inline <Explain> links.",
         }
-      - { name: body, label: Body, type: rich-text, required: true }
+      - {
+          name: body,
+          label: Body,
+          type: code,
+          options: { language: markdown },
+          required: true,
+          hint: "Markdown + MDX. Use <Explain slug='...'>term</Explain>, <Callout>, <YouTube id='...' />, $math$, etc.",
+        }
