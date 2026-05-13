@@ -1,6 +1,5 @@
 ---
 import Base from '../layouts/Base.astro';
-import NBShoe from '../components/NBShoe.astro';
 import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('posts', ({ data }) => !data.draft))
