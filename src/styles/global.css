@@ -126,7 +126,24 @@ main {
     padding: 8rem 2rem 6rem;
 }
 
-.hero { margin-bottom: 5rem; }
+.hero {
+    margin-bottom: 5rem;
+    position: relative;
+}
+
+.nb-shoe {
+    position: absolute;
+    left: -340px;
+    top: 0.5rem;
+    width: 320px;
+    height: auto;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@media (max-width: 1100px) {
+    .nb-shoe { display: none; }
+}
 
 .hero h1 {
     font-size: clamp(2.5rem, 7vw, 3.75rem);
