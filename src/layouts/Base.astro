@@ -14,7 +14,7 @@ const {
   description,
   ogType = 'website',
   publishedTime,
-  author = 'Akshan',
+  author = 'Akshan Krithick Ponvel',
 } = Astro.props;
 
 const siteTitle = 'Akshan';
@@ -23,6 +23,15 @@ const desc =
   description ??
   'Notes and essays on machine learning, data, and the field of artificial intelligence in general.';
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Akshan Krithick Ponvel',
+  alternateName: ['Akshan Krithick', 'Akshan'],
+  url: 'https://akshan.dev',
+  sameAs: ['https://github.com/akshan-main'],
+};
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -95,10 +104,17 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 
   <a
     class="admin-link"
-    href="/admin/"
+    href="/admin/#/collections/posts"
+    target="_blank"
+    rel="noopener"
     aria-hidden="true"
     tabindex="-1"
   >·</a>
+
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(personSchema)}
+  />
 
   <script is:inline>
     (() => {
