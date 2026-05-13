@@ -287,6 +287,28 @@ section { margin-bottom: 4rem; }
 
 .back-link:hover { color: var(--text); }
 
+/* Hidden admin shortcut — invisible by default, faint on hover */
+.admin-link {
+    position: fixed;
+    bottom: 0.5rem;
+    left: 0.5rem;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 1;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: 50;
+}
+
+.admin-link:hover,
+.admin-link:focus-visible { opacity: 0.5; }
+
 /* Callout component */
 .callout {
     margin: 1.75rem 0;
