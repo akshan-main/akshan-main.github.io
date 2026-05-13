@@ -9,7 +9,7 @@ export async function GET(context: APIContext) {
 
   return rss({
     title: 'Akshan — Writing',
-    description: 'Notes and essays on machine learning, data, and learning in public.',
+    description: 'Notes and essays on machine learning, data, and the field of artificial intelligence in general.',
     site: context.site!,
     items: posts.map((post) => ({
       title: post.data.title,

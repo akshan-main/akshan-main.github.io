@@ -20,7 +20,8 @@ const {
 const siteTitle = 'Akshan';
 const fullTitle = title ? `${title} — ${siteTitle}` : `${siteTitle} — Writing`;
 const desc =
-  description ?? 'Notes and essays on machine learning, data, and learning in public.';
+  description ??
+  'Notes and essays on machine learning, data, and the field of artificial intelligence in general.';
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 ---
 <!DOCTYPE html>
