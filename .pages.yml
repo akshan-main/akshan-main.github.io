@@ -29,5 +29,12 @@ content:
         }
       - { name: description, label: Description, type: string }
       - { name: readTime, label: Read time, type: string }
+      - {
+          name: tags,
+          label: Tags,
+          type: string,
+          list: true,
+          hint: "Press enter after each tag. e.g. machine-learning, transformers, notes",
+        }
       - { name: draft, label: Draft, type: boolean, default: false }
       - { name: body, label: Body, type: rich-text, required: true }

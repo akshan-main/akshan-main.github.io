@@ -28,6 +28,15 @@ collections:
       - { label: Date, name: date, widget: datetime, format: "YYYY-MM-DD", time_format: false, picker_utc: true }
       - { label: Description, name: description, widget: string, required: false }
       - { label: "Read time", name: readTime, widget: string, required: false, hint: "e.g. '5 min read'" }
+      - {
+          label: Tags,
+          name: tags,
+          widget: list,
+          required: false,
+          allow_add: true,
+          hint: "Press enter after each tag",
+          field: { label: Tag, name: tag, widget: string },
+        }
       - { label: Draft, name: draft, widget: boolean, default: false, required: false }
       - {
           label: Body,
