@@ -2,6 +2,7 @@ backend:
   name: github
   repo: akshan-main/akshan-main.github.io
   branch: main
+  base_url: https://sveltia-cms-auth.akshankrithick305.workers.dev
 
 media_folder: "public/images"
 public_folder: "/images"
