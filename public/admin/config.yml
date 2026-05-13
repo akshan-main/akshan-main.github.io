@@ -44,7 +44,7 @@ collections:
     format: frontmatter
     create: true
     slug: "{{slug}}"
-    summary: "{{title}} — {{date | date('YYYY-MM-DD')}}"
+    summary: "{{date | date('YYYY-MM-DD')}}"
     sortable_fields: [date, title]
     fields:
       - { label: Title, name: title, widget: string }
