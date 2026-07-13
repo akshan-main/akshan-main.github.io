@@ -10,40 +10,28 @@ draft: false
 mini: false
 ---
 
-This is the first post on the site. Mostly a placeholder so the page renders end-to-end before I write anything real.
+You keep hearing this line:
 
-The plan is to use this space for short notes on what I'm learning — machine learning, data, and the messy parts in between.
+> “You can make a RL environment for anything.”
 
-## Why a separate blog
+Which sounds impressive until you realize nobody explains what that means.
 
-Projects belong on GitHub. A resume belongs in a PDF. But the in-between thinking — what worked, what broke, what I'd do differently — needs somewhere quieter to live. That's what this is.
+Can I make an RL environment for doing laundry? Or deciding whether to reply to a message now or pretend I did not see it?
 
-This site supports math, callouts, code, embeds — everything below works in any `.mdx` post.
+Technically, yes, you can! Would that be useful? Keep reading.
 
-## Math
+RL Environment
 
-Inline: $f(x) = ax^2 + bx + c$.
+RL Environment is a fake world like the Matrix, where an agent can make decisions and eventually have to deal with the consequences the agent made based on it's decision.
 
-Block:
+The consequence is usually a reward or a punishment.
 
-$$
-\nabla_\theta J(\theta) = \frac{1}{m} \sum_{i=1}^{m} \left( h_\theta(x^{(i)}) - y^{(i)} \right) x^{(i)}
-$$
+Maybe the agent gets closer to winning, or maybe it's idle for a long time.
 
-## Callouts
+Both are technically learning experiences.
 
-The toggle in the bottom-right switches between light and grey themes.
+So when you hear someone say you can build an RL environment for anything, decrypt it as:
 
-Drafts (`draft: true` in frontmatter) are excluded from the build.
+> You can turn almost any repeated decision-making problem into a small game.
 
-## Code
-
-\`\`\`python
-def softmax(x):
-    e = np.exp(x - x.max())
-    return e / e.sum()
-\`\`\`
-
-## Embeds
-
-More soon.
+You decide what the agent can see, what it can do, and how you score its decisions. That becomes the environment.
