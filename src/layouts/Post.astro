@@ -1,5 +1,6 @@
 ---
 import Base from './Base.astro';
+import Newsletter from '../components/Newsletter.astro';
 import TagList from '../components/TagList.astro';
 
 interface Props {
@@ -45,23 +46,39 @@ const articleSchema = {
   ogType="article"
   publishedTime={date}
 >
+  <div class="read-progress" aria-hidden="true"></div>
   <article>
     <header class="post-header">
-      {mini && <div class="mini-badge">mini blog</div>}
-      <h1>{title}</h1>
-      <div class="post-meta">
-        <time datetime={date.toISOString()}>{dateStr}</time>
-        {readTime ? ` · ${readTime}` : ''}
+      <div class="post-kicker">
+        <span>
+          <time datetime={date.toISOString()}>{dateStr}</time>
+          {readTime ? ` · ${readTime}` : ''}
+        </span>
+        {mini && <span class="mini-badge">mini blog</span>}
       </div>
+      <h1>{title}</h1>
       <TagList tags={tags} />
     </header>
     <div class="post-body">
       <slot />
     </div>
+    <Newsletter />
     <a class="back-link" href="/">← all posts</a>
   </article>
   <script
     type="application/ld+json"
     set:html={JSON.stringify(articleSchema)}
   />
+  <script is:inline>
+    (() => {
+      const bar = document.querySelector('.read-progress');
+      if (!bar) return;
+      const update = () => {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        bar.style.width = (max > 0 ? (scrollY / max) * 100 : 0) + '%';
+      };
+      addEventListener('scroll', update, { passive: true });
+      update();
+    })();
+  </script>
 </Base>

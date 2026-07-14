@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import Newsletter from '../components/Newsletter.astro';
 import { getCollection } from 'astro:content';
 
 const all = (await getCollection('posts', ({ data }) => !data.draft)).sort(
@@ -19,12 +20,34 @@ const formatDate = (d: Date) =>
 ---
 <Base>
   <section class="hero">
+    <div class="hero-kicker">
+      <span>Akshan Krithick</span>
+    </div>
     <h1>Writing.</h1>
-    <p class="lead">Notes and essays on machine learning, data, and the field of artificial intelligence in general. Updated whenever I feel like I have something worth saying. I try to write exclusively about things you wouldn't find information about elsewhere, most of the time. And my target audience is everyone. Regardless of where you are, you might benefit a lot from my articles, consider signing up for notifications when I add a new article here. Thank you! </p>
+    <p class="lead">Notes and essays on machine learning, data, and the field of artificial intelligence in general. Updated whenever I feel like I have something worth saying. I try to write exclusively about things you wouldn't find information about elsewhere, most of the time. And my target audience is everyone. Regardless of where you are, you might benefit a lot from my articles, consider <a href="#subscribe">signing up for notifications</a> when I add a new post here. Thank you! </p>
     <p class="hero-aside">
       Why do I do it?<br />
       For you
     </p>
+
+    <figure class="hero-fig">
+      <svg viewBox="0 0 720 210" role="img" aria-label="A training loss curve descending noisily from top left to bottom right, drawn as a chart.">
+        <line class="fig-axis" x1="36" y1="16" x2="36" y2="182" />
+        <line class="fig-axis" x1="36" y1="182" x2="708" y2="182" />
+        <line class="fig-grid" x1="36" y1="58" x2="708" y2="58" />
+        <line class="fig-grid" x1="36" y1="100" x2="708" y2="100" />
+        <line class="fig-grid" x1="36" y1="141" x2="708" y2="141" />
+        <text class="fig-lbl" x="44" y="28">LOSS</text>
+        <text class="fig-lbl" x="708" y="200" text-anchor="end">STEPS -&gt;</text>
+        <path
+          class="fig-curve"
+          pathLength="1"
+          d="M 40 42 L 66 68 L 92 56 L 118 88 L 144 79 L 170 104 L 196 96 L 222 118 L 248 109 L 274 127 L 300 122 L 326 137 L 352 130 L 378 143 L 404 139 L 430 149 L 456 144 L 482 153 L 508 150 L 534 157 L 560 154 L 586 160 L 612 158 L 638 163 L 664 161 L 690 164"
+        />
+        <circle class="fig-dot" cx="690" cy="164" r="4" />
+      </svg>
+      <figcaption>Training loss. Still descending.</figcaption>
+    </figure>
   </section>
 
   <section>
@@ -64,6 +87,8 @@ const formatDate = (d: Date) =>
       </ul>
     )}
   </section>
+
+  <Newsletter />
 
   <script is:inline>
     (() => {

@@ -16,13 +16,17 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await post.render();
 
+// frontmatter readTime wins; otherwise estimate at 200 words/min
+const words = post.body.split(/\s+/).filter(Boolean).length;
+const readTime = post.data.readTime || `${Math.max(1, Math.round(words / 200))} min read`;
+
 const components = { Callout, Explain, YouTube, Tweet, Vimeo };
 ---
 <Post
   title={post.data.title}
   date={post.data.date}
   description={post.data.description}
-  readTime={post.data.readTime}
+  readTime={readTime}
   tags={post.data.tags}
   mini={post.data.mini}
 >

@@ -65,7 +65,7 @@ const personSchema = {
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='white'/><text y='.82em' x='50%25' text-anchor='middle' font-size='90' fill='black' font-family='Helvetica, Arial, sans-serif' font-weight='400'>%E2%84%AE</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500;600;700&family=Archivo+Black&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous" />
 
   <script is:inline>
@@ -100,6 +100,22 @@ const personSchema = {
   </nav>
   <main>
     <slot />
+
+    <footer class="colophon">
+      <p class="col-note">
+        This is my blog. I write about machine learning and data, and I try to
+        only publish things you won't find anywhere else.
+      </p>
+      <div class="col-field">
+        <span class="lbl">Author</span>
+        <span class="val">Akshan Krithick</span>
+      </div>
+      <a class="col-link" href="https://github.com/akshan-main">GitHub -&gt;</a>
+      <a class="col-link" href="/rss.xml">RSS -&gt;</a>
+      <a class="col-link" href="mailto:akshankrithick305@gmail.com">Email -&gt;</a>
+      <a class="col-link" href="/tags/">Tags -&gt;</a>
+      <div class="col-end">© 2026 Akshan Krithick</div>
+    </footer>
   </main>
 
   <a

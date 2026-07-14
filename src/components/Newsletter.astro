@@ -1,0 +1,16 @@
+---
+// ponytail: Buttondown handles storage + sending; set your username after creating the account
+const BUTTONDOWN_USER = 'akshan';
+---
+<section class="subscribe" id="subscribe">
+  <div class="section-label">Newsletter</div>
+  <p class="subscribe-note">Receive an email when a new article lands. No spams.</p>
+  <form
+    action={`https://buttondown.com/api/emails/embed-subscribe/${BUTTONDOWN_USER}`}
+    method="post"
+    target="_blank"
+  >
+    <input type="email" name="email" placeholder="you@wherever.com" required aria-label="Email address" />
+    <button type="submit">Sign up</button>
+  </form>
+</section>
