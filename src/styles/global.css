@@ -498,6 +498,12 @@ section { margin-bottom: 4rem; }
     text-wrap: balance;
 }
 
+/* ==word== highlights: stay brick red after the entrance blink */
+.post-header h1 em {
+    font-style: normal;
+    color: var(--accent);
+}
+
 .post-body { font-size: 1.1rem; }
 
 /* no orphan words dangling at paragraph ends (browsers that support it) */

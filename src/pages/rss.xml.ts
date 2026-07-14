@@ -1,6 +1,7 @@
 import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
+import { cleanTitle } from '../lib/title';
 
 export async function GET(context: APIContext) {
   const posts = (
@@ -12,7 +13,7 @@ export async function GET(context: APIContext) {
     description: 'Notes and essays on machine learning, data, and the field of artificial intelligence in general.',
     site: context.site!,
     items: posts.map((post) => ({
-      title: post.data.title,
+      title: cleanTitle(post.data.title),
       pubDate: post.data.date,
       description: post.data.description ?? '',
       link: `/posts/${post.slug}/`,

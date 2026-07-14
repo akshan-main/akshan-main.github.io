@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { getAllTags, originalTagName } from '../../lib/tags';
+import { cleanTitle } from '../../lib/title';
 
 export async function getStaticPaths() {
   const tagsMap = await getAllTags({ includeMini: true });
@@ -50,7 +51,7 @@ const formatDate = (d: Date) =>
         {mainPosts.map((post) => (
           <li>
             <a href={`/posts/${post.slug}/`}>
-              <span class="post-title">{post.data.title}</span>
+              <span class="post-title">{cleanTitle(post.data.title)}</span>
               <span class="post-date">{formatDate(post.data.date)}</span>
             </a>
           </li>
@@ -68,7 +69,7 @@ const formatDate = (d: Date) =>
         {miniPosts.map((post) => (
           <li>
             <a href={`/posts/${post.slug}/`}>
-              <span class="post-title">{post.data.title}</span>
+              <span class="post-title">{cleanTitle(post.data.title)}</span>
               <span class="post-date">{formatDate(post.data.date)}</span>
             </a>
           </li>

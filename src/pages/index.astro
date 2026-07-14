@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Newsletter from '../components/Newsletter.astro';
 import { getCollection } from 'astro:content';
+import { cleanTitle } from '../lib/title';
 
 const all = (await getCollection('posts', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
@@ -62,7 +63,7 @@ const formatDate = (d: Date) =>
       {mainPosts.map((post) => (
         <li>
           <a href={`/posts/${post.slug}/`}>
-            <span class="post-title">{post.data.title}</span>
+            <span class="post-title">{cleanTitle(post.data.title)}</span>
             <span class="post-date">{formatDate(post.data.date)}</span>
           </a>
         </li>
@@ -79,7 +80,7 @@ const formatDate = (d: Date) =>
         {miniPosts.map((post) => (
           <li>
             <a href={`/posts/${post.slug}/`}>
-              <span class="post-title">{post.data.title}</span>
+              <span class="post-title">{cleanTitle(post.data.title)}</span>
               <span class="post-date">{formatDate(post.data.date)}</span>
             </a>
           </li>
