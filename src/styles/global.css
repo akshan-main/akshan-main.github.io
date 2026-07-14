@@ -28,7 +28,11 @@
     color: var(--bg);
 }
 
-html { scroll-behavior: smooth; }
+/* global 90% scale — 1rem = 14.4px so all rem sizing shrinks with it */
+html {
+    scroll-behavior: smooth;
+    font-size: 90%;
+}
 
 /* cross-page fade (browsers without support just navigate normally) */
 @view-transition { navigation: auto; }
@@ -43,7 +47,7 @@ body {
     background: var(--bg);
     color: var(--text);
     line-height: 1.75;
-    font-size: 18px;
+    font-size: 16.2px;
     font-weight: 500;
     transition: background-color 0.25s ease, color 0.25s ease;
     -webkit-font-smoothing: antialiased;
@@ -163,7 +167,7 @@ nav {
 }
 
 main {
-    max-width: 960px;
+    max-width: 864px;
     margin: 0 auto;
     padding: 8rem 2rem 6rem;
 }
