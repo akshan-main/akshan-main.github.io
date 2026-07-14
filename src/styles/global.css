@@ -185,6 +185,14 @@ main {
         animation: rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
 
+    /* the title blinks brick red once as it rises, then settles to ink */
+    .hero > h1, .post-header > h1 {
+        animation-name: rise, title-blink;
+        animation-duration: 0.55s, 0.8s;
+        animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1), linear;
+        animation-fill-mode: forwards, forwards;
+    }
+
     .hero > *:nth-child(2), .post-header > *:nth-child(2) { animation-delay: 0.07s; }
     .hero > *:nth-child(3), .post-header > *:nth-child(3) { animation-delay: 0.14s; }
     .hero > *:nth-child(4), .post-header > *:nth-child(4) { animation-delay: 0.21s; }
@@ -196,6 +204,11 @@ main {
         opacity: 1;
         transform: none;
     }
+}
+
+@keyframes title-blink {
+    0%, 60% { color: var(--accent); }
+    61%, 100% { color: var(--text); }
 }
 
 .hero-kicker {
