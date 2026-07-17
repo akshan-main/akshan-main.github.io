@@ -137,15 +137,15 @@ Let's say the goal is to train an agent that can fix bugs inside unfamiliar repo
 
 The task tells the model what it must accomplish. But a useful training environment does not contain only one bug. A serious coding task distribution might contain:
 
-> Different repositories
-> Different programming languages
-> Feature requests
-> Dependency failures
-> Race conditions
-> Deployment problems
-> Performance regressions
-> Missing tests
-> Broken database migrations
+- Different repositories
+- Different programming languages
+- Feature requests
+- Dependency failures
+- Race conditions
+- Deployment problems
+- Performance regressions
+- Missing tests
+- Broken database migrations
 
 The tasks should be related enough that solving them develops a coherent skill. Giving the model one Python bug, one medieval-history question, and one instruction to generate a LinkedIn post is a context overload.
 
@@ -157,13 +157,13 @@ The harness controls how the agent attempts the task.
 
 It decides questions such as:
 
-> Which tools are available?
-> How are tool calls represented?
-> How much context can the model retain?
-> Who manages the multi-turn loop?
-> How are tool failures returned?
-> Can the agent create subagents?
-> When must the attempt stop?
+- Which tools are available?
+- How are tool calls represented?
+- How much context can the model retain?
+- Who manages the multi-turn loop?
+- How are tool failures returned?
+- Can the agent create subagents?
+- When must the attempt stop?
 
 A model using Claude Code, a simple terminal loop, and a custom research agent could attempt the same repository task and produce completely different trajectories.
 
@@ -179,13 +179,13 @@ The runtime is the world the agent touches.
 
 It might be:
 
-> A Python process
-> A Docker container
-> A virtual machine
-> A browser session
-> A simulated application
-> A database
-> A collection of APIs
+- A Python process
+- A Docker container
+- A virtual machine
+- A browser session
+- A simulated application
+- A database
+- A collection of APIs
 
 For the coding environment, the runtime may contain a repository checked out at a particular commit, a terminal, the required dependencies, test commands, and restrictions on network access.
 
@@ -205,14 +205,12 @@ The verifier decides whether the model succeeded.
 
 Possible verifiers include:
 
-> Unit tests
-> Database assertions
-> Expected file-state checks
-> Browser-state checks
-> Numerical comparisons
-> Security-policy checks
-> LLM judges
-> Human review
+- Unit tests
+- Database assertions
+- Expected file-state checks
+- Browser-state checks
+- LLM judges
+- Human review
 
 For the bug-fixing environment, the verifier might check:
 
@@ -232,13 +230,13 @@ The model needs to attempt the task repeatedly from a clean starting state. Afte
 
 The environment, therefore, needs some way to reproduce its initial state:
 
-> Repository snapshots
-> Database backups
-> Container images
-> Virtual-machine snapshots
-> Random seeds
-> Fresh browser profiles
-> Application-state resets
+- Repository snapshots
+- Database backups
+- Container images
+- Virtual-machine snapshots
+- Random seeds
+- Fresh browser profiles
+- Application-state resets
 
 Resetting also makes experiments comparable.
 
@@ -252,12 +250,12 @@ The model does not optimize your intention. It optimizes whatever earns a reward
 
 Suppose your verifier gives full credit when one visible test passes. The agent might discover that it can:
 
-> Delete the failing test
-> Hard-code the expected output
-> Change the test instead of the implementation
-> Read a reference patch accidentally left in the repository
-> Inspect a future commit containing the fix
-> Return a fabricated success message
+- Delete the failing test
+- Hard-code the expected output
+- Change the test instead of the implementation
+- Read a reference patch accidentally left in the repository
+- Inspect a future commit containing the fix
+- Return a fabricated success message
 
 The model is being extremely diligent in the worst possible direction.
 
