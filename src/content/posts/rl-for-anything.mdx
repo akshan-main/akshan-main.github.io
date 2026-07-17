@@ -242,7 +242,7 @@ Resetting also makes experiments comparable.
 
 If two model versions begin from different conditions, you no longer know whether one performed better or merely received a friendlier world.
 
-## The verifier is where the easy explanation ends
+## Continue reading for more literature review
 
 Building a fake repository is not enough. You must determine whether the agent actually fixed the bug. This sounds straightforward until the agent is trained against the same scoring system thousands of times. 
 
@@ -281,8 +281,6 @@ Finally, let another model actively attack the verifier:
 
 The verifier also has to accept valid solutions that its author did not anticipate. A test suite can reject garbage and still be bad if it rejects every creative but correct approach. The goal is not to force the model to reproduce one reference answer but to measure the underlying capability.
 
-## The frontier is cheap truth
-
 Math and code became early targets for RL environments for a simple reason: they often have inexpensive ways to check correctness. For mathematics, evaluate the answer. For code, compile it and run tests. For a database task, inspect the final tables. For a spreadsheet task, check the formulas, cell values, and relationships between inputs and outputs.
 
 These are **procedural rewards**, meaning the result can be scored by a deterministic program.
@@ -320,9 +318,7 @@ That pushed environment building toward repositories, browsers, spreadsheets, en
 
 ### **Agents made trajectories economically important**
 
-Trajectory itself is valuable data.
-
-Once models started acting through terminals, browsers, APIs, and enterprise software, training them required worlds that could respond to those actions and record what happened.
+Trajectory itself is valuable data. Once models started acting through terminals, browsers, APIs, and enterprise software, training them required worlds that could respond to those actions and record what happened.
 
 ### **The infrastructure became practical**
 
