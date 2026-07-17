@@ -10,128 +10,230 @@ draft: false
 mini: false
 ---
 
+## The agentic AI world is suddenly obsessed with fake worlds, scored experiences, and answer keys
+
 You keep hearing SF strivers say:
 
-> “You can make a RL environment for anything.”
+> “You can make an RL environment for anything.”
 
-Can I make an RL environment for doing laundry? Or deciding whether to reply to a message now or pretend I did not see it?
+Can I make an RL environment for doing laundry? What about deciding whether to reply to a message now or pretend I did not see it?
 
-Technically, yes, you can! Would that be useful? Take a guess.
+Technically, yes. Would either of those be useful? Take a guess.
 
-## RL Environment
+You could describe laundry as a series of states, actions, and rewards. The agent sees a pile of clothes, decides what to wash, chooses a temperature, and gets penalized when every white shirt turns pink.
 
-RL Environment is a fake world like the Matrix, where an agent can make decisions and eventually have to deal with the consequences the agent made based on it's decision.
+Congratulations! You have converted a chore into reinforcement learning and somehow made laundry consume more water!
 
-The consequence is usually a reward or a punishment.
+But that is not why San Francisco suddenly cares about RL envs.
 
-Maybe the agent gets closer to winning, or maybe it's idle for a long time.
+Over the past year, I kept seeing the phrase “RL environment” attached to companies that looked nothing alike. Prime Intellect had an environment hub and infrastructure for training models. Mechanize was building difficult software engineering tasks. Chakra was recreating products such as Figma, Gmail, and Salesforce. HUD was building tools for creating environments, running evaluations, and checking whether graders were being fooled. Apparently, all of these belong to the same category.
 
-Both are technically learning experiences.
+They have no product to sell.
 
-So when you hear someone say you can build an RL environment for anything, decrypt it as:
+“RL environment” has become a loose umbrella term for several pieces of the same cloth. The shared goal is to turn some human capability into scored experience that a model can train on.
 
-> You can turn almost any repeated decision-making problem into a small game.
+## Keeping it really short
 
-You decide what the agent can see, what it can do, and how you score its decisions. That becomes the environment.
+At the textbook level, an RL environment is a fake world with rules. Think of the Matrix, except for the cool-looking sunglasses that were made only in Japan.
 
-**Now, to the main picture; SF has seen a boom in AI-startups that are basically sophisticated RL- environments built for a niche**
+An agent observes what is happening, takes an action, and then has to deal with the consequences of that action. The environment updates, and the agent receives some form of reward or punishment.
 
-## Why is every second AI startup suddenly an “RL environment”
+The loop looks like this:
 
-Before answering "why", you need to understand what they do; they are manufacturing the homework, practice ground, and answer key that labs need to make models better at a niche: coding, browsing, financial analysis, research, design, enterprise software, and other kinds of work.
+Observe the situation
+        ↓
+Take an action
+        ↓
+The world changes
+        ↓
+Receive a reward
+        ↓
+`Repeat`
 
-In traditional reinforcement learning, an environment is the external system an agent interacts with:
+Maybe the agent moves closer to winning. Maybe it remains idle until the episode ends. Both are technically learning experiences.
 
-But the current token economy uses “environment” a bit loosely
+So when somebody says you can create an RL environment for anything, decrypt it as:
 
-[Prime Intellect defines an environment as a self-contained package containing:](https://www.primeintellect.ai/blog/lab)
+> You can turn almost any decision-making process into a small game by defining what the agent can see, what it can do, how the world responds, and how its behavior is scored.
 
-1. A dataset of prompts or tasks
-2. A harness controlling how an LLM model interacts with the task
-3. A rubric or reward function that scores the result
+The “world” could be a code repository.
 
-This package can support single-turn questions, tool use, terminal access, stateful sandboxes, multi-step agents, or full software replicas. Prime also uses exactly the same environment abstraction for RL training, evaluation, and synthetic-data generation.
+The “actions” could be terminal commands.
 
-So an “environment” could be:
+The “reward” could be whether the tests passed.
 
-- A Git repository at a specific commit, plus a bug to fix and tests that grade the solution
-- A fake Salesforce instance with customers and deals inside it
-- A terminal containing a broken server
-- A set of mathematical questions with an answer checker
-- A pixel-perfect clone of Figma
+This is where the boring definition of RL begins to drift away from the neat little environments you would see in [David Silver’s RL lectures](https://www.youtube.com/watch?v=2pWv7GOvuf0&list=PLqYmG7hTraZDM-OYHWgPebj2MfCFzFObQ). The skeleton is the same; just the skin wrapping it now comes in different colors!
 
-[Epoch AI found that](https://epoch.ai/gradient-updates/state-of-rl-envs) the terminology is not standardized. Some vendors call one Docker container containing one task an environment. Others use “environment” for an entire collection of tools, applications, and thousands of tasks. Even a single-turn math dataset can be packaged and sold as an environment despite having almost no traditional environment dynamics.
+## Promotion of the word “environment”, literature review -  **ontology problem**
 
-Over the past year, I have noticed the phrase "RL environment" attached to companies that look nothing alike.
+The current token economy uses the word _environment_ a little loosely ( usually what happens when a technical term starts appearing in fundraising presentations )
 
-Prime Intellect had a hub full of environments and a platform for running RL. Mechanize was building difficult software engineering tasks. Deeptune was recreating enterprise applications. Chakra was making pixel-accurate clones of products such as Salesforce, Figma, Gmail, and Notion. HUD was selling environmental infrastructure, automated grader checks, and a marketplace for environmental vendors. Somehow, all of them can be put into the umbrella term "RL environment". A [Hugging Face guide on RL environments](https://adithyask-rl-environments-guide.hf.space/) rebuilt the same environments across six different frameworks and surveyed sixteen projects in the broader ecosystem. Its most useful conclusion was that the boundary of an “environment” is a design choice, not a settled standard. Some frameworks provide little more than a tool interface and reward mechanism. Others include tasks, datasets, state management, rollouts, rubrics, and even the trainer.
+[Prime Intellect’s Lab documentation describes an environment as a package containing](https://www.primeintellect.ai/blog/lab):
 
-Then I understood the RL environments we are dealing with here are very different from what you'd notice in [David Silver's RL playlist](https://www.youtube.com/watch?v=2pWv7GOvuf0&list=PLqYmG7hTraZDM-OYHWgPebj2MfCFzFObQ).
+- A dataset of tasks
+- A harness that controls how the model approaches them
+- A rubric that scores the model’s performance
 
-These companies are selling an RL environment as a mechanism for producing scored experience (like a benchmark that also self-improves the model).
+Its [newer Verifiers architecture](https://www.primeintellect.ai/blog/verifiers-v1) decomposes the system slightly differently: a **taskset** defines the work and scoring, a **harness** determines how the task is attempted, and a **runtime** is where that attempt happens.
 
-## What is actually inside a modern environment?
+(This is evidence that the field is still deciding where the environment ends and the rest of the training stack begins)
 
-Framework names make this look more mysterious than it is. Underneath, most useful agent environments need five pieces.
+A recent [Hugging Face guide](https://adithyask-rl-environments-guide.hf.space/) implemented the same environments across six frameworks and found that each framework drew the boundary differently. Some treated the environment as a thin tool interface with a reward function. Others bundled tasks, state management, rollout logic, rubrics, and parts of the trainer. Epoch AI reached a similar conclusion after interviewing people across labs and environment companies: the terminology is not standardized, and even the line between a “task” and an “environment” is fuzzy.
 
-### **1. A taskset**
+As a result, all of the following may be called RL environments:
 
-The taskset specifies what the model must accomplish.
+- A Git repository at a specific commit, plus a bug to fix and tests that grade the patch
+- A fake Salesforce instance containing customers, emails, deals, and company policies
+- A collection of math problems with an answer checker
+- A pixel-accurate clone of Figma
+- A browser, database, inbox, calendar, and simulated customer living inside one workflow
 
-Not one task. A distribution of related tasks.
+Some of these are thin. A math environment may be a little more than a question and a checker. Others are thick. A computer-use environment may simulate an entire workplace, preserve state across hundreds of actions, and contain multiple applications that react to what the agent does.
 
-A coding environment might contain hundreds of repositories, bugs, feature requests, dependency failures, and deployment problems.
+> The more useful definition of an RL environment in the token economy is a mechanism for producing scored experience. It sits between a benchmark, a simulator, and a data factory.
 
-A spreadsheet environment might contain hundreds of workbooks requiring formulas, charts, forecasts, cleanup, or reconciliation.
+## “scored experience” buzzword
 
-Prime Intellect’s latest Verifiers architecture explicitly separates the **taskset**, meaning what must be solved, from the **harness**, meaning how the model is allowed to solve it. The same task can therefore be attempted with no tools, a simple tool-calling loop, or a full coding-agent harness.
+AI agents operate processes. Suppose an agent is asked to fix a bug in an unfamiliar repository. Its attempt might look like:
 
-### **2. A harness**
+\`\`\`
 
-The harness controls the agent’s working process.
+Read the bug report
+→ inspect the repository
+→ search for the relevant function
+→ edit the wrong file
+→ run the tests
+→ notice a regression
+→ revert the change
+→ find the actual cause
+→ patch the code
+→ run hidden tests
+→ submit
 
-It decides things such as:
+\`\`\`
+
+That entire sequence is called a **trajectory** or a **rollout**.
+
+A trajectory contains what the model saw, what it decided, which tools it called, what those tools returned, how it reacted to failure, and how the attempt ended.
+
+Agents can fail in places that are invisible if you inspect only the final answer. An agent may choose the wrong tool at step 4, corrupt the environment at step 17, hide the consequences until step 53, and then produce a beautifully written summary explaining that everything went well.
+
+You cannot reliably teach long-horizon behavior using only polished final answers. The model needs feedback on investigation, tool selection, recovery, validation, policy compliance, and knowing when to stop.
+
+**Pretraining works roughly like:**
+
+Here is a giant amount of information.
+Learn the patterns inside it.
+
+**Supervised fine-tuning often looks like:**
+
+Here is a task.
+Here is an expert solution.
+Learn to imitate it.
+
+**Need for RL environment:**
+
+Here is the task.
+Here are the tools.
+Try and wait for the world to respond.
+You will receive a score.
+Try again.
+
+The environment itself does not improve the model. It generates attempts and scores. A separate training algorithm uses those scores to update the model’s parameters. The same environment can also be used without updating the model at all. It may serve as an evaluation, generate successful trajectories for supervised training, compare different agent harnesses, or test prompts and tools. Prime Intellect explicitly supports these uses through the same environment abstraction.
+
+> RL environments are infrastructure for producing the experiences from which improvement can happen.
+
+## What's inside a modern RL environment?
+
+Framework names make this sound very mysterious. Underneath, a useful agent environment usually needs five pieces. Let us keep using the coding-agent example.
+
+Let's say the goal is to train an agent that can fix bugs inside unfamiliar repositories.
+
+### **1. A task distribution**
+
+The task tells the model what it must accomplish. But a useful training environment does not contain only one bug. A serious coding task distribution might contain:
+
+\`\`\`
+
+Different repositories
+Different programming languages
+Feature requests
+Dependency failures
+Race conditions
+Deployment problems
+Performance regressions
+Missing tests
+Broken database migrations
+
+\`\`\`
+
+The tasks should be related enough that solving them develops a coherent skill. Giving the model one Python bug, one medieval-history question, and one instruction to generate a LinkedIn post is a context overload.
+
+Task distribution defines what the model is supposed to become better at.
+
+### **2. An interaction harness**
+
+The harness controls how the agent attempts the task.
+
+It decides questions such as:
+
+\`\`\`
 
 Which tools are available?
 How are tool calls represented?
 How much context can the model retain?
-Who runs the multi-turn loop?
-How are tool errors handled?
-`When must the agent stop?`
+Who manages the multi-turn loop?
+How are tool failures returned?
+Can the agent create subagents?
+When must the attempt stop?
 
-Claude Code, a simple terminal agent, and a custom research agent could all attempt the same task but produce very different trajectories because their toolsets are different.
+\`\`\`
 
-This is an important distinction.
+A model using Claude Code, a simple terminal loop, and a custom research agent could attempt the same repository task and produce completely different trajectories.
 
-Sometimes the model is weak.
+Prime Intellect’s newer architecture makes this distinction explicit by separating the taskset, which defines _what_ must be solved, from the harness, which defines _how_ the agent tries to solve it.
 
-Sometimes the harness is bad.
+This matters when an agent performs badly. Sometimes the model is weak. Sometimes the harness is bad.
 
-Sometimes both are wearing a trench coat and blaming the environment.
+Sometimes neither is up to the mark, and the blame shifts to the environment.
 
-### **3. A runtime**
+### **3. A runtime and some state**
 
-The runtime is the actual world the agent touches.
+The runtime is the world the agent touches.
 
 It might be:
 
-- A Python process
-- A Docker container
-- A virtual machine
-- A browser session
-- A simulated application
-- A database
-- A collection of APIs
+\`\`\`
 
-For code and computer-use tasks, the runtime is often isolated from the training process. The environment server becomes a thin layer that forwards actions to disposable sandboxes or machines.
+A Python process
+A Docker container
+A virtual machine
+A browser session
+A simulated application
+A database
+A collection of APIs
 
-Cua, for example, focuses on this execution layer. It provides resettable Linux, Windows, macOS, and Android machines that can be claimed from warm pools and used for parallel training, evaluation, and data-generation workloads.
+\`\`\`
+
+For the coding environment, the runtime may contain a repository checked out at a particular commit, a terminal, the required dependencies, test commands, and restrictions on network access.
+
+The state is everything that can change during the attempt.
+
+Files are edited. Commands create outputs. Tests pass or fail. Databases are modified. Browser pages change.
+
+The agent does not merely describe what it would do. It acts on something that can react.
+
+For code and computer-use tasks, the runtime is often isolated from the model-training process. The environment layer may simply forward the agent’s actions to disposable containers, browser sessions, or machines for obvious reasons. 
+
+_Stay tuned for a blog on Sandboxing dropping soon!_
 
 ### **4. A verifier**
 
 The verifier decides whether the model succeeded.
 
 Possible verifiers include:
+
+\`\`\`
 
 Unit tests
 Database assertions
@@ -140,82 +242,142 @@ Browser-state checks
 Numerical comparisons
 Security-policy checks
 LLM judges
-`Human review`
+Human review
 
-The verifier might inspect only the final state, the complete trajectory, or both.
+\`\`\`
+
+For the bug-fixing environment, the verifier might check:
+
+- Did the original bug disappear?
+- Do previously passing tests still pass?
+- Did hidden edge cases pass?
+- Did the agent modify only allowed files?
+- Did it delete or weaken the tests?
+- Did it introduce a security problem?
+- Does the patch solve the general problem rather than one visible example?
+
+The verifier might inspect the final result, the complete trajectory, or both. This the part that converts activity into a training signal. Without a verifier, you have a model doing things. With a bad verifier, you have a model learning the wrong lessons.
 
 ### **5. A reset mechanism**
 
-The model needs to attempt the task repeatedly from a clean state.
+The model needs to attempt the task repeatedly from a clean starting state. After one coding agent breaks the repository, the next rollout should not inherit the wreckage.
 
-After one coding agent breaks the repository, the next rollout should not inherit the wreckage.
+The environment, therefore, needs some way to reproduce its initial state:
 
-After one sales agent sends an unhinged email to every fake customer, the next agent deserves their own opportunity to become a separate HR incident.
+\`\`\`
 
-The environment therefore needs snapshots, seeds, containers, database resets, or some other way to reproduce the starting state.
+Repository snapshots
+Database backups
+Container images
+Virtual-machine snapshots
+Random seeds
+Fresh browser profiles
+Application-state resets
 
-platform.
+\`\`\`
 
-These companies are closer to infrastructure and distribution than to a boutique team writing one expensive set of coding tasks.
+Resetting also makes experiments comparable.
 
-## Some companies check whether the whole thing is lying
+If two model versions begin from different conditions, you no longer know whether one performed better or merely received a friendlier world.
 
-HUD provides an environment SDK, hosted training and evaluation, a vendor marketplace, and automated checks for false positives, false negatives, prompt-grader mismatch, and reward hacking.
+## The verifier is where the easy explanation ends
 
-That last category is more important than it sounds.
+Building a fake repository is not enough. You must determine whether the agent actually fixed the bug. This sounds straightforward until the agent is trained against the same scoring system thousands of times. 
 
-The model is not the only component that can be wrong.
+The model does not optimize your intention. It optimizes whatever earns a reward.
 
-The task can be ambiguous. The simulator can be inaccurate. The verifier can reject valid solutions. The verifier can accept garbage. The reward can encourage behavior nobody intended.
+Suppose your verifier gives full credit when one visible test passes. The agent might discover that it can:
 
-An entire quality-assurance layer is appearing around the systems that are supposed to provide quality-assurance signals.
+\`\`\`
 
-Very normal industry. No recursion problems here.
+Delete the failing test
+Hard-code the expected output
+Change the test instead of the implementation
+Read a reference patch accidentally left in the repository
+Inspect a future commit containing the fix
+Return a fabricated success message
+
+\`\`\`
+
+The model is being extremely diligent in the worst possible direction.
+
+Epoch AI’s interviews found that resistance to reward hacking was one of the most important quality criteria for environment builders.
+
+This creates a slightly ridiculous problem:
+
+> Who verifies the verifier?
+
+A serious verification process might include several layers.
+
+- First, run known-good solutions and make sure the verifier accepts multiple legitimate approaches.
+- Then run known-bad solutions: empty answers, random changes, hard-coded outputs, incomplete work, and deliberately broken patches.
+- Introduce small mutations into correct solutions and check whether the verifier catches them.
+- Hide some tests from the acting model.
+- Restrict access to reference answers, grader code, and future repository commits.
+
+Finally, let another model actively attack the verifier:
+
+> Find a way to earn a high score without completing the intended task.
+
+Elliot Arledge has argued for a layered review process combining automatic structural checks, adversarial model attacks, and final human expert review. The exact marketplace he imagines is speculative, but the security principle is strong: treat the grader as software under attack, because that is effectively what repeated optimization turns it into.
+
+The verifier also has to accept valid solutions that its author did not anticipate. A test suite can reject garbage and still be bad if it rejects every creative but correct approach. The goal is not to force the model to reproduce one reference answer but to measure the underlying capability.
+
+## The frontier is cheap truth
+
+Math and code became early targets for RL environments for a simple reason: they often have inexpensive ways to check correctness. For mathematics, evaluate the answer. For code, compile it and run tests. For a database task, inspect the final tables. For a spreadsheet task, check the formulas, cell values, and relationships between inputs and outputs.
+
+These are **procedural rewards**, meaning the result can be scored by a deterministic program.
+
+Open-ended tasks are harder.
+
+- How do you automatically judge whether a negotiation was intelligent?
+- Whether a research report identified the right evidence?
+- Whether a design is good?
+- Whether a customer-support interaction solved the actual problem instead of just sounding polite?
+
+One option is an LLM judge guided by a detailed rubric. Another is human review. In practice, environments may mix deterministic checks for objective requirements with model-based judgments for qualitative ones. The Hugging Face guide identifies this divide between procedural rewards, LLM-as-judge systems, and sparse versus step-by-step feedback. It also notes that model judges create their own reward-hacking risks.
+
+The real boundary is not:
+
+> “Can this be represented as an RL environment?”
+
+Almost anything can. The better question is:
+
+> “Can success be measured cheaply, repeatedly, and honestly enough to train on?”
 
 ## Why did all of this appear now?
 
-Three things happened at once.
+Three things happened at roughly the same time.
 
-### Models became capable enough to benefit from harder practice
+### **Models became capable enough to benefit from harder practice**
 
-Early verifiable RL worked especially well in areas such as mathematics, logic, and code because correctness could be checked automatically.
+Early verifiable RL worked especially well in mathematics, logic, and coding because the answers could be checked automatically.
 
-The next step was obvious:
+As models became stronger, the obvious next question was:
 
-> Can we create similarly useful feedback for broader kinds of work?
+> Can we create useful feedback for broader kinds of work?
 
-Public model releases now describe RL training across increasingly large and diverse collections of tasks and environments. The Hugging Face guide summarizes reported scaling from tens of task domains to tens of thousands of parallel environments and even larger agent populations, although these numbers come from different organizations and should not be treated as directly comparable units.
+That pushed environment building toward repositories, browsers, spreadsheets, enterprise applications, research workflows, and longer multi-step tasks. Epoch AI’s research found that coding remains a major area, while enterprise workflows such as CRM navigation, report filing, and spreadsheet manipulation are growing quickly.
 
-The direction is still clear. Environment diversity and rollout volume are increasing.
+### **Agents made trajectories economically important**
 
-### Agents made trajectories economically important
+Trajectory itself is valuable data.
 
-A chatbot answers a question.
+Once models started acting through terminals, browsers, APIs, and enterprise software, training them required worlds that could respond to those actions and record what happened.
 
-An agent operates a process.
+### **The infrastructure became practical**
 
-That process may require dozens or hundreds of decisions, and a failure at step 8 may not become visible until step 70.
+An RL training step does not run in one environment. It may run hundreds or thousands of copies at once so that the trainer can compare many attempts.
 
-You cannot train reliable long-horizon behavior using only polished final answers. The model needs feedback on tool selection, investigation strategy, recovery, validation, policy compliance, and termination.
+The Hugging Face guide gives a simple example: a batch containing 64 prompts with eight generated rollouts per prompt requires 512 concurrent environment instances for that step. Its scaling experiments found that environment servers could handle thousands of sessions, while sandbox creation and tool execution were often the heavier bottlenecks.
 
-### **The required infrastructure became practical**
+## So can you make an RL environment for anything?
 
-A training step does not run one environment.
+Technically, nearly anything can be wrapped in a task, an action interface, a state, and a reward.
 
-It may run hundreds or thousands of instances concurrently so the trainer can compare multiple attempts. For example, 64 prompts with eight generated rollouts each already require 512 simultaneous environment instances.
+The task must be repeatable. The agent must be able to take meaningful actions. Those actions must produce consequences. The starting state must be reproducible. Success must be measurable. The verifier must be difficult to cheat. The tasks must vary enough that the model learns a capability instead of memorizing. And whatever it learns inside the fake world must transfer to the real one.
 
-The Hugging Face guide’s scaling experiments found that containerized environment services could handle thousands of concurrent sessions, while the heavier bottleneck was usually the external execution backend, such as sandbox creation and tool execution.
+These systems are trying to manufacture something the internet does not naturally contain in a clean form: repeated attempts at real work, complete with mistakes, recoveries, outcomes, and trustworthy scores.
 
-Once disposable containers, browser sessions, virtual machines, tool protocols, and hosted inference became ordinary infrastructure, building these systems stopped requiring every lab to create the entire stack from scratch.
-
-## References
-
-[1][  https://www.primeintellect.ai/blog/lab]([1])
-
-[2][ https://x.com/elliotarledge/status/2032753593535574433]([2])
-
-[3] [https://epoch.ai/gradient-updates/state-of-rl-envs](https://epoch.ai/gradient-updates/state-of-rl-envs)
-
-[4] [https://adithyask-rl-environments-guide.hf.space/](https://adithyask-rl-environments-guide.hf.space/)
-
-[5] [https://www.primeintellect.ai/blog/verifiers-v1](https://www.primeintellect.ai/blog/verifiers-v1)
+The difficult part is building a scoreboard that measures the real skill and does not collapse when the thing being scored starts optimizing against it. And yes, you can still make one for doing laundry.
