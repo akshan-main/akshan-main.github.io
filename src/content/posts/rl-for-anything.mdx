@@ -32,23 +32,11 @@ They have no product to sell.
 
 “RL environment” has become a loose umbrella term for several pieces of the same cloth. The shared goal is to turn some human capability into scored experience that a model can train on.
 
-## Keeping it really short
+## Archaic
 
 At the textbook level, an RL environment is a fake world with rules. Think of the Matrix, except for the cool-looking sunglasses that were made only in Japan.
 
 An agent observes what is happening, takes an action, and then has to deal with the consequences of that action. The environment updates, and the agent receives some form of reward or punishment.
-
-The loop looks like this:
-
-Observe the situation
-        ↓
-Take an action
-        ↓
-The world changes
-        ↓
-Receive a reward
-        ↓
-`Repeat`
 
 Maybe the agent moves closer to winning. Maybe it remains idle until the episode ends. Both are technically learning experiences.
 
@@ -96,7 +84,7 @@ Some of these are thin. A math environment may be a little more than a question 
 
 AI agents operate processes. Suppose an agent is asked to fix a bug in an unfamiliar repository. Its attempt might look like:
 
-\`\`\`
+\`\`\`python
 
 Read the bug report
 → inspect the repository
