@@ -86,7 +86,7 @@ A spreadsheet environment might contain hundreds of workbooks requiring formulas
 
 Prime Intellect’s latest Verifiers architecture explicitly separates the **taskset**, meaning what must be solved, from the **harness**, meaning how the model is allowed to solve it. The same task can therefore be attempted with no tools, a simple tool-calling loop, or a full coding-agent harness.
 
-### 2. A harness
+### **2. A harness**
 
 The harness controls the agent’s working process.
 
@@ -109,7 +109,7 @@ Sometimes the harness is bad.
 
 Sometimes both are wearing a trench coat and blaming the environment.
 
-### 3. A runtime
+### **3. A runtime**
 
 The runtime is the actual world the agent touches.
 
@@ -127,7 +127,7 @@ For code and computer-use tasks, the runtime is often isolated from the training
 
 Cua, for example, focuses on this execution layer. It provides resettable Linux, Windows, macOS, and Android machines that can be claimed from warm pools and used for parallel training, evaluation, and data-generation workloads.
 
-### 4. A verifier
+### **4. A verifier**
 
 The verifier decides whether the model succeeded.
 
@@ -144,7 +144,7 @@ LLM judges
 
 The verifier might inspect only the final state, the complete trajectory, or both.
 
-### 5. A reset mechanism
+### **5. A reset mechanism**
 
 The model needs to attempt the task repeatedly from a clean state.
 
@@ -158,7 +158,7 @@ platform.
 
 These companies are closer to infrastructure and distribution than to a boutique team writing one expensive set of coding tasks.
 
-### Some companies check whether the whole thing is lying
+## Some companies check whether the whole thing is lying
 
 HUD provides an environment SDK, hosted training and evaluation, a vendor marketplace, and automated checks for false positives, false negatives, prompt-grader mismatch, and reward hacking.
 
@@ -198,7 +198,7 @@ That process may require dozens or hundreds of decisions, and a failure at step 
 
 You cannot train reliable long-horizon behavior using only polished final answers. The model needs feedback on tool selection, investigation strategy, recovery, validation, policy compliance, and termination.
 
-### The required infrastructure became practical
+### **The required infrastructure became practical**
 
 A training step does not run one environment.
 
