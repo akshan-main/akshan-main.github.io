@@ -38,4 +38,34 @@ You decide what the agent can see, what it can do, and how you score its decisio
 
 ## Why is every second AI startup suddenly an “RL environment”
 
-An RL-environment startup usually turns some valuable capability into **executable training data**:
+Before answering "why", you need to understand what they do; they are manufacturing the homework, practice ground, and answer key that labs need to make models better at a niche: coding, browsing, financial analysis, research, design, enterprise software, and other kinds of work.
+
+In traditional reinforcement learning, an environment is the external system an agent interacts with:
+
+But the current token economy uses “environment” a bit loosely
+
+[Prime Intellect defines an environment as a self-contained package containing:](https://www.primeintellect.ai/blog/lab)
+
+1. A dataset of prompts or tasks
+2. A harness controlling how an LLM model interacts with the task
+3. A rubric or reward function that scores the result
+
+This package can support single-turn questions, tool use, terminal access, stateful sandboxes, multi-step agents, or full software replicas. Prime also uses exactly the same environment abstraction for RL training, evaluation, and synthetic-data generation.
+
+So an “environment” could be:
+
+- A Git repository at a specific commit, plus a bug to fix and tests that grade the solution
+- A fake Salesforce instance with customers and deals inside it
+- A terminal containing a broken server
+- A spreadsheet with hidden errors
+- A set of mathematical questions with an answer checker
+- A pixel-perfect clone of Figma
+- A fake company containing Gmail, Slack, Salesforce, documents, and employees
+
+[Epoch AI found that](https://epoch.ai/gradient-updates/state-of-rl-envs) the terminology is not standardized. Some vendors call one Docker container containing one task an environment. Others use “environment” for an entire collection of tools, applications, and thousands of tasks. Even a single-turn math dataset can be packaged and sold as an environment despite having almost no traditional environment dynamics.
+
+References
+
+[1] [https://www.primeintellect.ai/blog/lab](https://www.primeintellect.ai/blog/lab)
+
+[2] [https://x.com/elliotarledge/status/2032753593535574433](https://x.com/elliotarledge/status/2032753593535574433)
